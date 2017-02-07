@@ -1,0 +1,39 @@
+{
+  "name": "space-chat",
+  "version": "1.0.0",
+  "description": "anonymous chat triggerd by spaces",
+  "main": "index.js",
+  "repository": "git@gitlab.com:kaoDev/space-chat.git",
+  "author": "kaoDev",
+  "license": "MIT",
+  "devDependencies": {
+    "react-scripts-ts": "1.0.6"
+  },
+  "dependencies": {
+    "@types/jest": "^18.1.1",
+    "@types/node": "^7.0.5",
+    "@types/react": "^15.0.7",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-redux": "^4.4.36",
+    "@types/redux-actions": "^1.2.2",
+    "awesome-typescript-loader": "^3.0.3",
+    "firebase": "^3.6.8",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-actions": "^1.2.1",
+    "redux-observable": "^0.13.0",
+    "rxfirebase": "^0.0.1-alpha.2",
+    "rxjs": "^5.1.0",
+    "typescript": "^2.2.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  }
+}
