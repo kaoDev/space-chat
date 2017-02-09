@@ -1,17 +1,20 @@
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import { fireBasePullEpic, fireBasePushEpic, fireBaseSignIn } from './firebaseEpics';
-import { wordsList, input } from './reducer';
+import { getLocationEpic } from './locationEpic';
+import { wordsList, input, location } from './reducer';
 
 export const rootEpic = combineEpics<any, any>(
     fireBaseSignIn,
     fireBasePullEpic,
-    fireBasePushEpic
+    fireBasePushEpic,
+    getLocationEpic
 );
 
 export const rootReducer = combineReducers({
     wordsList,
-    input
+    input,
+    location
 });
 
 const epicMiddleware = createEpicMiddleware(rootEpic);

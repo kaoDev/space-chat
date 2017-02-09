@@ -16,11 +16,19 @@ const firebaseConfig = {
 RxFirebase.initializeApp(firebaseConfig);
 
 const signIn = Observable.from(RxFirebase.auth.signInAnonymously());
-const wordsRef = RxFirebase.database.ref('/words');
+type FirebaseWordWrapper = { value: string, location: Position };
+const wordsRef = RxFirebase.database.ref('words').afterSignIn();
 
-type FirebaseWordWrapper = { value: string };
 
-const words$: Observable<{ val: () => FirebaseWordWrapper }> = wordsRef.onChildAdded();
+
+
+const words$ = RxFirebase.database
+    .ref('words')
+    .afterSignIn()
+    .orderByChild('location/timestamp')
+    .startAt(Date.now() - 60000 * 60 * 24)
+    .onChildAdded()
+    .map((w: { val: () => FirebaseWordWrapper }) => w.val());
 
 
 
@@ -31,17 +39,16 @@ export const fireBaseSignIn: Epic<Action<{}>, { wordsList: string[] }> = action$
 
 export const fireBasePullEpic: Epic<Action<string>, { wordsList: string[] }> = action$ => action$
     .ofType(types.FIREBASE_SIGNIN)
-    .mergeMap(a => signIn)
     .mergeMap(a => words$)
     .map(word => {
-        return gotWord(word.val().value);
+        return gotWord(word.value);
     }
     );
 
 
-export const fireBasePushEpic: Epic<Action<{}>, { wordsList: string[] }> = action$ => action$
+export const fireBasePushEpic: Epic<Action<{}>, { wordsList: string[], location: Position }> = (action$, middleWareApi) => action$
     .ofType(types.SPACE)
     .map((spaceAction: Action<string>) => {
-        wordsRef.push({ value: spaceAction.payload as string });
+        wordsRef.push({ value: spaceAction.payload as string, location: middleWareApi.getState().location });
         return { type: types.PUSHED };
     });

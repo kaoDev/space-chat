@@ -5,3 +5,4 @@ export const GOT_WORDS = 'GOT_WORDS';
 export const SPACE = 'SPACE';
 export const PUSHED = 'PUSHED';
 export const INPUT_CHANGED = 'INPUT_CHANGED';
+export const GOT_USER_LOCATION = 'GOT_USER_LOCATION';
